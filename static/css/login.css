@@ -1,0 +1,355 @@
+/* Login Page Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+ 
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #E8DCC4, #D4C4A8);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Top Navigation */
+.navbar {
+    background: #2C3E50 !important;
+    padding: 15px 0;
+}
+
+.navbar .brand-text {
+    font-size: 24px;
+    font-weight: 900;
+    color: white !important;
+}
+
+/* Login Section */
+.login-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    min-height: calc(100vh - 500px);
+}
+
+.login-card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 60px 50px;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.login-title {
+    font-size: 48px;
+    font-weight: 900;
+    color: #8B6F47;
+    text-align: center;
+    margin-bottom: 15px;
+    letter-spacing: 3px;
+}
+
+.login-subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+.login-form {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 15px 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    background: #f9f9f9;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #8B6F47;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(139, 111, 71, 0.1);
+}
+
+.form-control::placeholder {
+    color: #999;
+}
+
+.forgot-password {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    font-size: 13px;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+    color: #8B6F47;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 15px;
+    background: transparent;
+    color: #333;
+    border: 2px solid #333;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 30px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-login:hover {
+    background: #333;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.signup-link {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.signup-link p {
+    color: #666;
+    font-size: 14px;
+}
+
+.signup-link a {
+    color: #666;
+    text-decoration: underline;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.signup-link a:hover {
+    color: #8B6F47;
+}
+
+/* Footer */
+.footer {
+    background: linear-gradient(135deg, #C85A54, #B8442F);
+    color: white;
+    padding: 50px 0 20px;
+    margin-top: auto;
+}
+
+.footer-title {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.footer-text {
+    font-size: 13px;
+    line-height: 1.8;
+    margin-bottom: 12px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.footer-text strong {
+    font-weight: 700;
+}
+
+.footer-link {
+    color: white;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.footer-link:hover {
+    opacity: 0.8;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: white;
+    padding-left: 5px;
+}
+
+.btn-subscribe {
+    background: white;
+    color: #C85A54;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+}
+
+.btn-subscribe:hover {
+    background: #2C3E50;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.footer-divider {
+    border-color: rgba(255, 255, 255, 0.2);
+    margin: 30px 0 20px;
+}
+
+.footer-bottom {
+    text-align: center;
+}
+
+.footer-bottom p {
+    font-size: 13px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* WhatsApp Float Button */
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 60px;
+    height: 60px;
+    background: #25D366;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 5px 20px rgba(37, 211, 102, 0.5);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    text-decoration: none;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.7);
+    color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .login-card {
+        padding: 40px 30px;
+    }
+    
+    .login-title {
+        font-size: 36px;
+    }
+    
+    .login-subtitle {
+        font-size: 13px;
+    }
+    
+    .forgot-password {
+        position: static;
+        display: block;
+        text-align: right;
+        margin-top: 10px;
+        transform: none;
+    }
+    
+    .footer {
+        padding: 40px 0 20px;
+    }
+    
+    .footer-title {
+        font-size: 14px;
+        margin-top: 20px;
+    }
+    
+    .footer-text {
+        font-size: 12px;
+    }
+    
+    .whatsapp-float {
+        width: 50px;
+        height: 50px;
+        font-size: 26px;
+        bottom: 20px;
+        left: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .login-section {
+        padding: 40px 15px;
+    }
+    
+    .login-card {
+        padding: 30px 20px;
+    }
+    
+    .login-title {
+        font-size: 32px;
+    }
+    
+    .form-control {
+        padding: 12px 15px;
+        font-size: 14px;
+    }
+    
+    .btn-login {
+        padding: 12px;
+        font-size: 14px;
+    }
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-card {
+    animation: fadeIn 0.6s ease;
+}
