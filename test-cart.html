@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Cart System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="static/css/styles.css">
+    <style>
+        body {
+            padding: 50px;
+        }
+        .test-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cart System Test Page</h1>
+        
+        <div class="test-section">
+            <h3>System Status</h3>
+            <div id="statusContainer"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>Test Actions</h3>
+            <button class="btn btn-primary" onclick="testAddToCart()">Add Test Product to Cart</button>
+            <button class="btn btn-success" onclick="openCartOffcanvas()">Open Cart Offcanvas</button>
+            <button class="btn btn-danger" onclick="clearTestCart()">Clear Cart</button>
+        </div>
+        
+        <div class="test-section">
+            <h3>Current Cart Contents</h3>
+            <pre id="cartContents"></pre>
+        </div>
+    </div>
+
+    <!-- Cart Offcanvas -->
+    <div class="offcanvas offcanvas-end cart-offcanvas" tabindex="-1" id="cartOffcanvas">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title"><i class="fas fa-shopping-cart"></i> Shopping Cart</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div id="cartOffcanvasItems" class="cart-offcanvas-items-container"></div>
+        </div>
+        <div class="cart-offcanvas-footer">
+            <div class="cart-summary">
+                <div class="cart-summary-row">
+                    <span>Subtotal:</span>
+                    <span id="cartOffcanvasSubtotal">₹0</span>
+                </div>
+                <div class="cart-summary-row">
+                    <span>Delivery:</span>
+                    <span id="cartOffcanvasDelivery">₹50</span>
+                </div>
+                <div class="cart-summary-row cart-total-row">
+                    <span>Total:</span>
+                    <span id="cartOffcanvasTotal">₹0</span>
+                </div>
+            </div>
+            <div class="cart-actions">
+                <button class="btn-clear-cart-offcanvas" id="cartOffcanvasClearBtn">
+                    <i class="fas fa-trash"></i> Clear Cart
+                </button>
+                <button class="btn-checkout-offcanvas" id="cartOffcanvasCheckoutBtn">
+                    Proceed to Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="static/js/cart-offcanvas.js"></script>
+    
+    <script>
+        // Test functions
+        function testAddToCart() {
+            const testProduct = {
+                title: 'Test Mukhwas',
+                price: '₹199',
+                image: 'static/images/i1.png',
+                quantity: 1,
+                size: '100g'
+            };
+            
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.push(testProduct);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            updateStatus('Product added to cart!', 'success');
+            displayCart();
+        }
+        
+        function clearTestCart() {
+            localStorage.removeItem('cart');
+            updateStatus('Cart cleared!', 'success');
+            displayCart();
+        }
+        
+        function updateStatus(message, type) {
+            const container = document.getElementById('statusContainer');
+            const status = document.createElement('div');
+            status.className = `status ${type}`;
+            status.textContent = message;
+            container.appendChild(status);
+            
+            setTimeout(() => {
+                status.remove();
+            }, 3000);
+        }
+        
+        function displayCart() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            document.getElementById('cartContents').textContent = JSON.stringify(cart, null, 2);
+        }
+        
+        // Check system status on load
+        window.addEventListener('DOMContentLoaded', function() {
+            const statusContainer = document.getElementById('statusContainer');
+            
+            // Check if cart-offcanvas.js loaded
+            if (typeof openCartOffcanvas === 'function') {
+                statusContainer.innerHTML += '<div class="status success">✓ cart-offcanvas.js loaded successfully</div>';
+            } else {
+                statusContainer.innerHTML += '<div class="status error">✗ cart-offcanvas.js NOT loaded</div>';
+            }
+            
+            // Check if Bootstrap is loaded
+            if (typeof bootstrap !== 'undefined') {
+                statusContainer.innerHTML += '<div class="status success">✓ Bootstrap loaded</div>';
+            } else {
+                statusContainer.innerHTML += '<div class="status error">✗ Bootstrap NOT loaded</div>';
+            }
+            
+            // Check if offcanvas element exists
+            if (document.getElementById('cartOffcanvas')) {
+                statusContainer.innerHTML += '<div class="status success">✓ Cart offcanvas element exists</div>';
+            } else {
+                statusContainer.innerHTML += '<div class="status error">✗ Cart offcanvas element NOT found</div>';
+            }
+            
+            // Display current cart
+            displayCart();
+        });
+    </script>
+</body>
+</html>

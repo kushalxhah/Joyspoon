@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test User System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .section {
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .output {
+            background: white;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+        input {
+            padding: 8px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>User Management System Test</h1>
+    
+    <div class="section">
+        <h2>1. Register User</h2>
+        <input type="text" id="regName" placeholder="Full Name" value="Test User">
+        <input type="email" id="regEmail" placeholder="Email" value="test@example.com">
+        <input type="tel" id="regPhone" placeholder="Phone" value="9876543210">
+        <input type="password" id="regPassword" placeholder="Password" value="password123">
+        <button onclick="testRegister()">Register</button>
+        <div class="output" id="regOutput"></div>
+    </div>
+
+    <div class="section">
+        <h2>2. Login User</h2>
+        <input type="email" id="loginEmail" placeholder="Email" value="test@example.com">
+        <input type="password" id="loginPassword" placeholder="Password" value="password123">
+        <button onclick="testLogin()">Login</button>
+        <div class="output" id="loginOutput"></div>
+    </div>
+
+    <div class="section">
+        <h2>3. View All Users</h2>
+        <button onclick="viewAllUsers()">View All Users</button>
+        <div class="output" id="usersOutput"></div>
+    </div>
+
+    <div class="section">
+        <h2>4. Current User</h2>
+        <button onclick="viewCurrentUser()">View Current User</button>
+        <button onclick="testLogout()">Logout</button>
+        <div class="output" id="currentUserOutput"></div>
+    </div>
+
+    <div class="section">
+        <h2>5. Clear All Data</h2>
+        <button onclick="clearAllData()" style="background: #f44336;">Clear Everything</button>
+        <div class="output" id="clearOutput"></div>
+    </div>
+
+    <script src="static/js/user-management.js"></script>
+    <script>
+        function testRegister() {
+            const userData = {
+                fullName: document.getElementById('regName').value,
+                email: document.getElementById('regEmail').value,
+                phone: document.getElementById('regPhone').value,
+                password: document.getElementById('regPassword').value
+            };
+            
+            const result = registerUser(userData);
+            document.getElementById('regOutput').textContent = JSON.stringify(result, null, 2);
+        }
+
+        function testLogin() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            const result = loginUser(email, password);
+            document.getElementById('loginOutput').textContent = JSON.stringify(result, null, 2);
+        }
+
+        function viewAllUsers() {
+            const users = getAllUsers();
+            document.getElementById('usersOutput').textContent = JSON.stringify(users, null, 2);
+        }
+
+        function viewCurrentUser() {
+            const user = getCurrentUser();
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            document.getElementById('currentUserOutput').textContent = 
+                'Is Logged In: ' + isLoggedIn + '\n\n' +
+                'Current User:\n' + JSON.stringify(user, null, 2);
+        }
+
+        function testLogout() {
+            const result = logoutUser();
+            document.getElementById('currentUserOutput').textContent = JSON.stringify(result, null, 2);
+        }
+
+        function clearAllData() {
+            localStorage.removeItem('usersDB');
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('isLoggedIn');
+            document.getElementById('clearOutput').textContent = 'All data cleared! Refresh the page.';
+        }
+
+        // Auto-load current user on page load
+        window.onload = function() {
+            viewCurrentUser();
+        };
+    </script>
+</body>
+</html>
