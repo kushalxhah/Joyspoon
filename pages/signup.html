@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up - JoyeSpoon</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Login CSS -->
+    <link rel="stylesheet" href="../static/css/login.css" />
+  </head>
+  <body>
+    <!-- Top Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="../index.html">
+          <span class="brand-text"><img src="../static/images/joyspoonicon.avif"></span>
+        </a>
+        <button
+          class="btn btn-outline-light btn-sm"
+          onclick="window.location.href='../index.html'"
+        >
+          <i class="fas fa-arrow-left"></i> Back to Home
+        </button>
+      </div>
+    </nav>
+
+    <!-- Signup Section -->
+    <section class="login-section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-5 col-md-7">
+            <div class="login-card">
+              <h1 class="login-title">SIGN UP</h1>
+              <p class="login-subtitle">
+                Create your account to start shopping with us.
+              </p>
+
+              <form id="signupForm" class="login-form">
+                <div class="form-group mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="fullName"
+                    placeholder="Full Name"
+                    required
+                  />
+                </div>
+
+                <div class="form-group mb-3">
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    placeholder="Email"
+                    required
+                  />
+                </div>
+
+                <div class="form-group mb-3">
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="phone"
+                    placeholder="Phone Number (e.g., 9876543210)"
+                    pattern="[6-9][0-9]{9}"
+                    maxlength="10"
+                    title="Phone number must be 10 digits and start with 6, 7, 8, or 9"
+                    required
+                  />
+                </div>
+
+                <div class="form-group mb-3">
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    placeholder="Password"
+                    required
+                  />
+                </div>
+
+                <div class="form-group mb-3">
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="confirmPassword"
+                    placeholder="Confirm Password"
+                    required
+                  />
+                </div>
+
+                <button type="submit" class="btn btn-login">SIGN UP</button>
+
+                <div class="signup-link">
+                  <p>
+                    Already have an account? <a href="login.html">Log in</a>
+                  </p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/7801820504" class="whatsapp-float" target="_blank">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- User Management System -->
+    <script src="../static/js/user-management.js"></script>
+
+    <!-- Signup Script -->
+    <script>
+      // Verify user management system is loaded
+      console.log('User management system loaded:', typeof registerUser !== 'undefined');
+      console.log('Current users in DB:', getAllUsers().length);
+
+      // Handle signup form submission
+      document
+        .getElementById('signupForm')
+        .addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          const fullName = document.getElementById('fullName').value.trim();
+          const email = document.getElementById('email').value.trim();
+          const phone = document.getElementById('phone').value.trim();
+          const password = document.getElementById('password').value;
+          const confirmPassword = document.getElementById('confirmPassword').value;
+
+          console.log('=== SIGNUP ATTEMPT ===');
+          console.log('Full Name:', fullName);
+          console.log('Email:', email);
+          console.log('Phone:', phone);
+
+          // Validate passwords match
+          if (password !== confirmPassword) {
+            alert('Passwords do not match. Please try again.');
+            return;
+          }
+
+          // Validate phone number (must be 10 digits and start with 6-9)
+          if (!/^[6-9]\d{9}$/.test(phone)) {
+            alert('Please enter a valid 10-digit phone number starting with 6, 7, 8, or 9');
+            return;
+          }
+
+          // Check if user management system is available
+          if (typeof registerUser !== 'function') {
+            console.error('ERROR: registerUser function not found!');
+            alert('System error: User management not loaded. Please refresh the page.');
+            return;
+          }
+
+          // Create user object (without address)
+          const userData = {
+            fullName: fullName,
+            email: email,
+            phone: phone,
+            password: password
+          };
+
+          // Register user using user management system
+          const result = registerUser(userData);
+          
+          console.log('Registration result:', result);
+          
+          if (!result.success) {
+            alert(result.message);
+            return;
+          }
+
+          // Verify user was saved
+          console.log('Users after registration:', getAllUsers().length);
+          console.log('New user created:', result.user);
+
+          // Show success message
+          alert(result.message + '\n\nYou will now be redirected to the login page.');
+          
+          // Redirect to login page
+          console.log('Redirecting to login page...');
+          setTimeout(() => {
+            window.location.replace('login.html');
+          }, 500);
+        });
+      
+      // Real-time phone number validation
+      document.getElementById('phone').addEventListener('input', function(e) {
+        // Remove non-numeric characters
+        this.value = this.value.replace(/\D/g, '');
+        
+        // Limit to 10 digits
+        if (this.value.length > 10) {
+          this.value = this.value.slice(0, 10);
+        }
+        
+        // Visual feedback for invalid first digit
+        if (this.value.length > 0 && !/^[6-9]/.test(this.value)) {
+          this.style.borderColor = '#ff4444';
+          this.style.background = '#fff5f5';
+        } else {
+          this.style.borderColor = '';
+          this.style.background = '';
+        }
+      });
+
+      // Debug: Log page load
+      console.log('Signup page loaded');
+    </script>
+  </body>
+</html>
+
+

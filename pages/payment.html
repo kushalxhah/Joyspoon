@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Gateway - JoyeSpoon</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #e8dcc4 0%, #f5f0e8 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .payment-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .payment-header {
+        background: #2c3e50;
+        color: white;
+        padding: 30px;
+        text-align: center;
+      }
+
+      .payment-header h1 {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+
+      .payment-header p {
+        font-size: 14px;
+        opacity: 0.9;
+      }
+
+      .payment-body {
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        gap: 0;
+      }
+
+      .payment-methods {
+        padding: 40px;
+        border-right: 1px solid #e0e0e0;
+      }
+
+      .order-summary {
+        padding: 40px;
+        background: #f9f9f9;
+      }
+
+      .method-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 25px;
+      }
+
+      .payment-option {
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .payment-option:hover {
+        border-color: #d2691e;
+        background: #fff5ee;
+      }
+
+      .payment-option.active {
+        border-color: #d2691e;
+        background: #fff5ee;
+      }
+
+      .payment-option input[type='radio'] {
+        display: none;
+      }
+
+      .option-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+      }
+
+      .option-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+        background: #2c3e50;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+      }
+
+      .option-info h4 {
+        font-size: 16px;
+        font-weight: 600;
+        color: #2c3e50;
+        margin: 0;
+      }
+
+      .option-info p {
+        font-size: 12px;
+        color: #666;
+        margin: 0;
+      }
+
+      .option-content {
+        display: none;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #e0e0e0;
+      }
+
+      .payment-option.active .option-content {
+        display: block;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 8px;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: border-color 0.3s;
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: #d2691e;
+      }
+
+      .card-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+
+      .summary-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 20px;
+      }
+
+      .summary-item {
+        background: white;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        gap: 15px;
+      }
+
+      .summary-item img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+
+      .summary-details h5 {
+        font-size: 14px;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 5px;
+      }
+
+      .summary-details p {
+        font-size: 12px;
+        color: #666;
+        margin: 0;
+      }
+
+      .summary-total {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 2px solid #e0e0e0;
+      }
+
+      .total-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-size: 14px;
+      }
+
+      .total-row.grand-total {
+        font-size: 18px;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #e0e0e0;
+      }
+
+      .btn-pay {
+        width: 100%;
+        padding: 15px;
+        background: #d2691e;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 20px;
+      }
+
+      .btn-pay:hover {
+        background: #b85a15;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(210, 105, 30, 0.3);
+      }
+
+      .success-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+      }
+
+      .success-overlay.show {
+        display: flex;
+      }
+
+      .success-content {
+        background: white;
+        padding: 60px;
+        border-radius: 20px;
+        text-align: center;
+        animation: successPop 0.5s ease-out;
+      }
+
+      @keyframes successPop {
+        0% {
+          transform: scale(0);
+          opacity: 0;
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .success-icon {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: #4caf50;
+        margin: 0 auto 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: checkPulse 0.8s ease-out;
+      }
+
+      @keyframes checkPulse {
+        0% {
+          transform: scale(0);
+          opacity: 0;
+        }
+        50% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .success-icon i {
+        font-size: 50px;
+        color: white;
+        animation: checkAppear 0.5s 0.3s ease-out forwards;
+        opacity: 0;
+      }
+
+      @keyframes checkAppear {
+        0% {
+          opacity: 0;
+          transform: scale(0) rotate(-180deg);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1) rotate(0deg);
+        }
+      }
+
+      .success-content h2 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 15px;
+      }
+
+      .success-content p {
+        font-size: 16px;
+        color: #666;
+      }
+
+      @media (max-width: 992px) {
+        .payment-body {
+          grid-template-columns: 1fr;
+        }
+
+        .payment-methods {
+          border-right: none;
+          border-bottom: 1px solid #e0e0e0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="payment-container">
+      <div class="payment-header">
+        <h1>Secure Payment Gateway</h1>
+        <p>Complete your payment to confirm your order</p>
+      </div>
+
+      <div class="payment-body">
+        <div class="payment-methods">
+          <h3 class="method-title">Select Payment Method</h3>
+
+          <!-- UPI Method -->
+          <div class="payment-option" data-method="upi">
+            <input type="radio" name="payment" id="upi" />
+            <label for="upi" style="cursor: pointer; width: 100%">
+              <div class="option-header">
+                <div class="option-icon">
+                  <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="option-info">
+                  <h4>UPI Payment</h4>
+                  <p>Pay using Google Pay, PhonePe, Paytm, etc.</p>
+                </div>
+              </div>
+            </label>
+            <div class="option-content">
+              <div class="form-group">
+                <label for="upiId">Enter UPI ID</label>
+                <input
+                  type="text"
+                  id="upiId"
+                  placeholder="example@upi"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Method -->
+          <div class="payment-option" data-method="card">
+            <input type="radio" name="payment" id="card" />
+            <label for="card" style="cursor: pointer; width: 100%">
+              <div class="option-header">
+                <div class="option-icon">
+                  <i class="fas fa-credit-card"></i>
+                </div>
+                <div class="option-info">
+                  <h4>Credit / Debit Card</h4>
+                  <p>Visa, Mastercard, Rupay accepted</p>
+                </div>
+              </div>
+            </label>
+            <div class="option-content">
+              <div class="form-group">
+                <label for="cardNumber">Card Number</label>
+                <input
+                  type="text"
+                  id="cardNumber"
+                  placeholder="1234 5678 9012 3456"
+                  maxlength="19"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="cardName">Cardholder Name</label>
+                <input
+                  type="text"
+                  id="cardName"
+                  placeholder="John Doe"
+                  required
+                />
+              </div>
+              <div class="card-row">
+                <div class="form-group">
+                  <label for="expiry">Expiry Date</label>
+                  <input
+                    type="text"
+                    id="expiry"
+                    placeholder="MM/YY"
+                    maxlength="5"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="cvv">CVV</label>
+                  <input
+                    type="text"
+                    id="cvv"
+                    placeholder="123"
+                    maxlength="3"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cash on Delivery -->
+          <div class="payment-option" data-method="cod">
+            <input type="radio" name="payment" id="cod" />
+            <label for="cod" style="cursor: pointer; width: 100%">
+              <div class="option-header">
+                <div class="option-icon">
+                  <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <div class="option-info">
+                  <h4>Cash on Delivery</h4>
+                  <p>Pay when you receive your order</p>
+                </div>
+              </div>
+            </label>
+            <div class="option-content">
+              <p style="color: #666; font-size: 14px">
+                <i class="fas fa-info-circle" style="color: #d2691e"></i>
+                You can pay in cash when your order is delivered to your
+                doorstep. No advance payment required.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="order-summary">
+          <h3 class="summary-title">Order Summary</h3>
+          <div id="orderItems"></div>
+
+          <div class="summary-total">
+            <div class="total-row">
+              <span>Total Items:</span>
+              <span id="totalItems">0</span>
+            </div>
+            <div class="total-row">
+              <span>Subtotal:</span>
+              <span id="subtotal">₹0</span>
+            </div>
+            <div class="total-row">
+              <span>Delivery:</span>
+              <span id="delivery">₹0</span>
+            </div>
+            <div class="total-row" id="discountRow" style="display: none; color: #4CAF50;">
+              <span>Discount:</span>
+              <span id="discountAmount">-₹0</span>
+            </div>
+            <div class="total-row grand-total">
+              <span>Total:</span>
+              <span id="grandTotal">₹0</span>
+            </div>
+          </div>
+
+          <!-- Coupon Section -->
+          <div class="coupon-section" style="margin-top: 20px; padding: 20px; background: white; border-radius: 10px;">
+            <h6 style="font-size: 14px; font-weight: 700; color: #2c3e50; margin-bottom: 15px;">
+              <i class="fas fa-tag" style="color: #d2691e;"></i> Have a Coupon Code?
+            </h6>
+            <div style="display: flex; gap: 10px;">
+              <input 
+                type="text" 
+                id="couponInput" 
+                placeholder="Enter coupon code" 
+                style="flex: 1; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px; text-transform: uppercase;"
+              />
+              <button 
+                id="applyCouponBtn" 
+                style="padding: 10px 20px; background: #d2691e; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;"
+                onmouseover="this.style.background='#b85a15'" 
+                onmouseout="this.style.background='#d2691e'"
+              >
+                Apply
+              </button>
+            </div>
+            <div id="couponMessage" style="margin-top: 10px; font-size: 13px;"></div>
+            
+            <!-- Loyalty Progress -->
+            <div id="loyaltyProgress" style="margin-top: 20px; padding: 15px; background: #f9f9f9; border-radius: 8px; display: none;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <span style="font-size: 13px; font-weight: 600; color: #2c3e50;">Loyalty Progress</span>
+                <span id="progressText" style="font-size: 12px; color: #666;"></span>
+              </div>
+              <div style="width: 100%; height: 8px; background: #e0e0e0; border-radius: 10px; overflow: hidden;">
+                <div id="progressBar" style="height: 100%; background: linear-gradient(90deg, #d2691e, #ff8c42); transition: width 0.3s ease;"></div>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-pay" id="proceedToCheckout">Proceed to Checkout</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Address Modal -->
+    <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="border-radius: 20px; border: none;">
+          <div class="modal-header" style="background: #2c3e50; color: white; border-radius: 20px 20px 0 0; padding: 25px;">
+            <h5 class="modal-title" id="addressModalLabel" style="font-size: 22px; font-weight: 700;">
+              <i class="fas fa-map-marker-alt"></i> Delivery Address
+            </h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" style="padding: 30px;">
+            
+            <!-- Address Display View -->
+            <div id="addressDisplayView" style="display: none;">
+              <div style="background: #f9f9f9; padding: 25px; border-radius: 15px; border: 2px solid #e0e0e0;">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 20px;">
+                  <h6 style="font-size: 16px; font-weight: 700; color: #2c3e50; margin: 0;">
+                    <i class="fas fa-check-circle" style="color: #4CAF50;"></i> Saved Address
+                  </h6>
+                  <button id="editAddressInModalBtn" style="background: #d2691e; color: white; border: none; padding: 8px 20px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                    <i class="fas fa-edit"></i> Edit Address
+                  </button>
+                </div>
+                <div id="modalAddressDisplay" style="font-size: 14px; color: #555; line-height: 2;">
+                  <!-- Address will be displayed here -->
+                </div>
+              </div>
+              <div class="alert alert-info" style="background: #e3f2fd; border: none; border-radius: 10px; padding: 15px; margin-top: 20px;">
+                <i class="fas fa-info-circle" style="color: #2196F3;"></i>
+                <small style="color: #1976D2; margin-left: 5px;">
+                  Your order will be delivered to this address
+                </small>
+              </div>
+            </div>
+
+            <!-- Address Form View -->
+            <div id="addressFormView">
+              <p style="color: #666; margin-bottom: 25px; font-size: 14px;">
+                Please provide your delivery address to complete the order
+              </p>
+              
+              <form id="addressForm">
+                <div class="row">
+                  <div class="col-md-12 mb-3">
+                    <label for="fullNameAddress" style="font-weight: 600; color: #2c3e50; margin-bottom: 8px; font-size: 14px;">
+                      Full Name <span style="color: red;">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="fullNameAddress"
+                      placeholder="Enter your full name"
+                      required
+                      style="padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 14px;"
+                    />
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="phoneAddress" style="font-weight: 600; color: #2c3e50; margin-bottom: 8px; font-size: 14px;">
+                      Phone Number <span style="color: red;">*</span>
+                    </label>
+                    <input
+                      type="tel"
+                      class="form-control"
+                      id="phoneAddress"
+                      placeholder="10-digit mobile number"
+                      pattern="[6-9][0-9]{9}"
+                      maxlength="10"
+                      required
+                      style="padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 14px;"
+                    />
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="emailAddress" style="font-weight: 600; color: #2c3e50; margin-bottom: 8px; font-size: 14px;">
+                      Email <span style="color: red;">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="emailAddress"
+                      placeholder="your@email.com"
+                      required
+                      style="padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 14px;"
+                    />
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12 mb-3">
+                    <label for="addressLine1" style="font-weight: 600; color: #2c3e50; margin-bottom: 8px; font-size: 14px;">
+                      Address Line 1 <span style="color: red;">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="addressLine1"
+                      placeholder="House No., Building Name, Street"
+                      required
+                      style="padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 14px;"
+                    />
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12 mb-3">
+                    <label for="addressLine2" style="font-weight: 600; color: #2c3e50; margin-bottom: 8px; font-size: 14px;">
+                      Address Line 2
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="addressLine2"
+                      placeholder="Area, Colony, Locality (Optional)"
+                      style="padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 14px;"
+                    />
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="city" style="font-weight: 600; color: #2c3e50; margin-bottom: 8px; font-size: 14px;">
+                      City <span style="color: red;">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="city"
+                      placeholder="Enter city"
+                      required
+                      style="padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 14px;"
+                    />
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="state" style="font-weight: 600; color: #2c3e50; margin-bottom: 8px; font-size: 14px;">
+                      State <span style="color: red;">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="state"
+                      placeholder="Enter state"
+                      required
+                      style="padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 14px;"
+                    />
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="pincode" style="font-weight: 600; color: #2c3e50; margin-bottom: 8px; font-size: 14px;">
+                      Pincode <span style="color: red;">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="pincode"
+                      placeholder="6-digit pincode"
+                      pattern="[0-9]{6}"
+                      maxlength="6"
+                      required
+                      style="padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 14px;"
+                    />
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="landmark" style="font-weight: 600; color: #2c3e50; margin-bottom: 8px; font-size: 14px;">
+                      Landmark
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="landmark"
+                      placeholder="Nearby landmark (Optional)"
+                      style="padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 14px;"
+                    />
+                  </div>
+                </div>
+
+                <div class="alert alert-info" style="background: #e3f2fd; border: none; border-radius: 10px; padding: 15px; margin-top: 10px;">
+                  <i class="fas fa-info-circle" style="color: #2196F3;"></i>
+                  <small style="color: #1976D2; margin-left: 5px;">
+                    Your address will be saved for future orders
+                  </small>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer" style="border: none; padding: 20px 30px 30px; justify-content: space-between;">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="padding: 12px 30px; border-radius: 10px; font-weight: 600;">
+              <i class="fas fa-arrow-left"></i> Back
+            </button>
+            <button type="button" class="btn btn-pay" id="completePaymentBtn" style="padding: 12px 40px; border-radius: 10px; font-weight: 700; border: none;">
+              <i class="fas fa-lock"></i> Complete Payment
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Overlay -->
+    <div class="success-overlay" id="successOverlay">
+      <div class="success-content">
+        <div class="success-icon">
+          <i class="fas fa-check"></i>
+        </div>
+        <h2>Order Successful!</h2>
+        <p>Your order has been placed successfully</p>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- User Management System -->
+    <script src="../static/js/user-management.js"></script>
+
+    <!-- Loyalty System -->
+    <script src="../static/js/loyalty-system.js"></script>
+
+    <script>
+      // Payment method selection
+      document.querySelectorAll('.payment-option').forEach((option) => {
+        option.addEventListener('click', function () {
+          document
+            .querySelectorAll('.payment-option')
+            .forEach((opt) => opt.classList.remove('active'));
+          this.classList.add('active');
+          const radio = this.querySelector('input[type="radio"]');
+          radio.checked = true;
+        });
+      });
+
+      // Load order summary from localStorage
+      let appliedDiscount = 0;
+      let couponApplied = false;
+      
+      // Update item quantity
+      function updateItemQuantity(index, change) {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        if (cart[index]) {
+          cart[index].quantity += change;
+          
+          // Remove item if quantity becomes 0
+          if (cart[index].quantity <= 0) {
+            cart.splice(index, 1);
+          }
+          
+          // Save updated cart
+          localStorage.setItem('cart', JSON.stringify(cart));
+          
+          // Check if cart is empty
+          if (cart.length === 0) {
+            alert('Your cart is empty!');
+            window.location.href = '../index.html';
+            return;
+          }
+          
+          // Reload order summary
+          loadOrderSummary();
+        }
+      }
+      
+      // Remove item from payment page
+      function removeItemFromPayment(index) {
+        if (confirm('Are you sure you want to remove this item?')) {
+          let cart = JSON.parse(localStorage.getItem('cart')) || [];
+          
+          // Remove item
+          cart.splice(index, 1);
+          
+          // Save updated cart
+          localStorage.setItem('cart', JSON.stringify(cart));
+          
+          // Check if cart is empty
+          if (cart.length === 0) {
+            alert('Your cart is empty!');
+            window.location.href = '../index.html';
+            return;
+          }
+          
+          // Reload order summary
+          loadOrderSummary();
+        }
+      }
+      
+      function loadOrderSummary() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        if (cart.length === 0) {
+          alert('Your cart is empty!');
+          window.location.href = '../index.html';
+          return;
+        }
+
+        const orderItemsContainer = document.getElementById('orderItems');
+
+        // Render order items with controls
+        orderItemsContainer.innerHTML = cart
+          .map((item, index) => {
+            const priceValue = parseInt(item.price.replace(/[^0-9]/g, ''));
+            const itemTotal = priceValue * item.quantity;
+            
+            return `
+              <div class="summary-item" style="position: relative; padding: 20px; margin-bottom: 15px;">
+                <button 
+                  class="btn-remove-item" 
+                  onclick="removeItemFromPayment(${index})"
+                  style="position: absolute; top: 10px; right: 10px; background: #ff4444; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; transition: all 0.3s ease;"
+                  onmouseover="this.style.background='#cc0000'"
+                  onmouseout="this.style.background='#ff4444'"
+                  title="Remove item"
+                >
+                  <i class="fas fa-times"></i>
+                </button>
+                <div style="display: flex; gap: 15px; align-items: start;">
+                  <img src="${item.image}" alt="${item.title}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px;">
+                  <div class="summary-details" style="flex: 1;">
+                    <h5 style="font-size: 15px; font-weight: 600; color: #2c3e50; margin-bottom: 5px;">${item.title}</h5>
+                    ${item.size ? `<p style="font-size: 12px; color: #999; margin-bottom: 5px;">Size: ${item.size}</p>` : ''}
+                    <p style="font-size: 13px; color: #666; margin-bottom: 8px;">${item.price} each</p>
+                    
+                    <!-- Quantity Controls -->
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                      <button 
+                        onclick="updateItemQuantity(${index}, -1)"
+                        style="width: 30px; height: 30px; border: 2px solid #d2691e; background: white; color: #d2691e; border-radius: 5px; cursor: pointer; font-weight: bold; transition: all 0.3s ease;"
+                        onmouseover="this.style.background='#d2691e'; this.style.color='white'"
+                        onmouseout="this.style.background='white'; this.style.color='#d2691e'"
+                      >
+                        <i class="fas fa-minus" style="font-size: 10px;"></i>
+                      </button>
+                      <span style="font-weight: 600; color: #2c3e50; min-width: 30px; text-align: center; font-size: 15px;">${item.quantity}</span>
+                      <button 
+                        onclick="updateItemQuantity(${index}, 1)"
+                        style="width: 30px; height: 30px; border: 2px solid #d2691e; background: white; color: #d2691e; border-radius: 5px; cursor: pointer; font-weight: bold; transition: all 0.3s ease;"
+                        onmouseover="this.style.background='#d2691e'; this.style.color='white'"
+                        onmouseout="this.style.background='white'; this.style.color='#d2691e'"
+                      >
+                        <i class="fas fa-plus" style="font-size: 10px;"></i>
+                      </button>
+                    </div>
+                    
+                    <p style="font-weight: 700; color: #d2691e; font-size: 16px; margin: 0;">₹${itemTotal}</p>
+                  </div>
+                </div>
+              </div>
+            `;
+          })
+          .join('');
+
+        // Calculate totals
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const subtotal = cart.reduce((sum, item) => {
+          const priceValue = parseInt(item.price.replace(/[^0-9]/g, ''));
+          return sum + (priceValue * item.quantity);
+        }, 0);
+        
+        const delivery = subtotal >= 499 ? 0 : 50;
+        const grandTotal = subtotal + delivery - appliedDiscount;
+
+        document.getElementById('totalItems').textContent = totalItems;
+        document.getElementById('subtotal').textContent = `₹${subtotal}`;
+        document.getElementById('delivery').textContent =
+          delivery === 0 ? 'FREE' : `₹${delivery}`;
+        document.getElementById('grandTotal').textContent = `₹${grandTotal}`;
+        
+        // Show loyalty progress
+        showLoyaltyProgress();
+      }
+      
+      // Show loyalty progress
+      function showLoyaltyProgress() {
+        const loyaltyStatus = getLoyaltyStatus();
+        if (!loyaltyStatus) return;
+        
+        const progressContainer = document.getElementById('loyaltyProgress');
+        const progressText = document.getElementById('progressText');
+        const progressBar = document.getElementById('progressBar');
+        
+        if (loyaltyStatus.activeCoupon) {
+          // User has an active coupon
+          progressContainer.style.display = 'block';
+          progressText.textContent = `You have an active coupon: ${loyaltyStatus.activeCoupon.code}`;
+          progressBar.style.width = '100%';
+          progressBar.style.background = 'linear-gradient(90deg, #4CAF50, #45a049)';
+        } else if (loyaltyStatus.purchaseCount > 0) {
+          // Show progress towards next coupon
+          progressContainer.style.display = 'block';
+          const progress = (loyaltyStatus.purchaseCount / 5) * 100;
+          progressText.textContent = `${loyaltyStatus.remainingPurchases} more purchase${loyaltyStatus.remainingPurchases > 1 ? 's' : ''} above ₹500 to earn a coupon!`;
+          progressBar.style.width = `${progress}%`;
+        }
+      }
+      
+      // Apply coupon
+      document.getElementById('applyCouponBtn').addEventListener('click', function() {
+        const couponCode = document.getElementById('couponInput').value.trim();
+        const couponMessage = document.getElementById('couponMessage');
+        
+        if (!couponCode) {
+          couponMessage.innerHTML = '<span style="color: #ff4444;"><i class="fas fa-exclamation-circle"></i> Please enter a coupon code</span>';
+          return;
+        }
+        
+        // Get cart total
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const subtotal = cart.reduce((sum, item) => {
+          const priceValue = parseInt(item.price.replace(/[^0-9]/g, ''));
+          return sum + (priceValue * item.quantity);
+        }, 0);
+        const delivery = subtotal >= 499 ? 0 : 50;
+        const cartTotal = subtotal + delivery;
+        
+        // Apply coupon
+        const result = applyCoupon(couponCode, cartTotal);
+        
+        if (result.success) {
+          appliedDiscount = result.discount;
+          couponApplied = true;
+          
+          // Show discount row
+          document.getElementById('discountRow').style.display = 'flex';
+          document.getElementById('discountAmount').textContent = `-₹${result.discount}`;
+          
+          // Update grand total
+          document.getElementById('grandTotal').textContent = `₹${result.newTotal}`;
+          
+          // Show success message
+          couponMessage.innerHTML = `<span style="color: #4CAF50;"><i class="fas fa-check-circle"></i> ${result.message}</span>`;
+          
+          // Disable coupon input
+          document.getElementById('couponInput').disabled = true;
+          this.disabled = true;
+          this.textContent = 'Applied';
+          this.style.background = '#4CAF50';
+        } else {
+          couponMessage.innerHTML = `<span style="color: #ff4444;"><i class="fas fa-exclamation-circle"></i> ${result.message}</span>`;
+        }
+      });
+
+      // Handle "Proceed to Checkout" button - Opens address modal
+      document.getElementById('proceedToCheckout').addEventListener('click', function () {
+        const selectedMethod = document.querySelector(
+          '.payment-option.active input[type="radio"]'
+        );
+
+        if (!selectedMethod) {
+          alert('Please select a payment method');
+          return;
+        }
+
+        const method = selectedMethod.id;
+
+        // Validate inputs based on method
+        if (method === 'upi') {
+          const upiId = document.getElementById('upiId').value.trim();
+          if (!upiId) {
+            alert('Please enter your UPI ID');
+            return;
+          }
+          // Basic UPI ID validation
+          if (!upiId.includes('@')) {
+            alert('Please enter a valid UPI ID (e.g., example@upi)');
+            return;
+          }
+        } else if (method === 'card') {
+          const cardNumber = document.getElementById('cardNumber').value.trim();
+          const cardName = document.getElementById('cardName').value.trim();
+          const expiry = document.getElementById('expiry').value.trim();
+          const cvv = document.getElementById('cvv').value.trim();
+
+          if (!cardNumber) {
+            alert('Please enter card number');
+            return;
+          }
+          if (!cardName) {
+            alert('Please enter cardholder name');
+            return;
+          }
+          if (!expiry) {
+            alert('Please enter expiry date (MM/YY)');
+            return;
+          }
+          if (!cvv) {
+            alert('Please enter CVV');
+            return;
+          }
+          
+          // Validate card number length (remove spaces)
+          const cardNumberClean = cardNumber.replace(/\s/g, '');
+          if (cardNumberClean.length < 13 || cardNumberClean.length > 19) {
+            alert('Please enter a valid card number (13-19 digits)');
+            return;
+          }
+          
+          // Validate expiry format (MM/YY)
+          if (!/^\d{2}\/\d{2}$/.test(expiry)) {
+            alert('Please enter expiry date in MM/YY format');
+            return;
+          }
+          
+          // Validate expiry month and year
+          const [month, year] = expiry.split('/').map(num => parseInt(num));
+          const fullYear = 2000 + year; // Convert YY to YYYY
+          const currentYear = 2026;
+          const currentMonth = 2; // February 2026
+          
+          // Check if month is valid (1-12)
+          if (month < 1 || month > 12) {
+            alert('Please enter a valid month (01-12)');
+            return;
+          }
+          
+          // Check if card is expired
+          if (fullYear < currentYear || (fullYear === currentYear && month < currentMonth)) {
+            alert('Your card has expired. Please use a valid card');
+            return;
+          }
+          
+          // Check if year is too far in future (more than 10 years)
+          if (fullYear > currentYear + 10) {
+            alert('Please enter a valid expiry year');
+            return;
+          }
+          
+          // Validate CVV length
+          if (cvv.length < 3 || cvv.length > 4) {
+            alert('Please enter a valid CVV (3 or 4 digits)');
+            return;
+          }
+        }
+        
+        // Check if user has saved address
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        const addressDisplayView = document.getElementById('addressDisplayView');
+        const addressFormView = document.getElementById('addressFormView');
+        
+        if (currentUser && currentUser.address) {
+          // Show address display view
+          const addr = currentUser.address;
+          document.getElementById('modalAddressDisplay').innerHTML = `
+            <p style="margin: 0 0 8px 0;"><strong style="color: #2c3e50;">${addr.fullName}</strong></p>
+            <p style="margin: 0 0 8px 0;"><i class="fas fa-home" style="color: #d2691e; width: 20px;"></i> ${addr.addressLine1}${addr.addressLine2 ? ', ' + addr.addressLine2 : ''}</p>
+            <p style="margin: 0 0 8px 0;"><i class="fas fa-map-marker-alt" style="color: #d2691e; width: 20px;"></i> ${addr.city}, ${addr.state} - ${addr.pincode}</p>
+            ${addr.landmark ? `<p style="margin: 0 0 8px 0;"><i class="fas fa-landmark" style="color: #d2691e; width: 20px;"></i> ${addr.landmark}</p>` : ''}
+            <p style="margin: 0 0 8px 0;"><i class="fas fa-phone" style="color: #d2691e; width: 20px;"></i> ${addr.phone}</p>
+            <p style="margin: 0;"><i class="fas fa-envelope" style="color: #d2691e; width: 20px;"></i> ${addr.email}</p>
+          `;
+          addressDisplayView.style.display = 'block';
+          addressFormView.style.display = 'none';
+        } else {
+          // Show form view for new address
+          addressDisplayView.style.display = 'none';
+          addressFormView.style.display = 'block';
+          
+          // Pre-fill basic info if available
+          if (currentUser) {
+            document.getElementById('fullNameAddress').value = currentUser.fullName || '';
+            document.getElementById('phoneAddress').value = currentUser.phone || '';
+            document.getElementById('emailAddress').value = currentUser.email || '';
+          }
+        }
+        
+        // Open address modal
+        const addressModal = new bootstrap.Modal(document.getElementById('addressModal'));
+        addressModal.show();
+      });
+      
+      // Edit address button in modal
+      document.getElementById('editAddressInModalBtn').addEventListener('click', function() {
+        // Switch to form view
+        document.getElementById('addressDisplayView').style.display = 'none';
+        document.getElementById('addressFormView').style.display = 'block';
+        
+        // Pre-fill form with current address
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (currentUser && currentUser.address) {
+          document.getElementById('fullNameAddress').value = currentUser.address.fullName || '';
+          document.getElementById('phoneAddress').value = currentUser.address.phone || '';
+          document.getElementById('emailAddress').value = currentUser.address.email || '';
+          document.getElementById('addressLine1').value = currentUser.address.addressLine1 || '';
+          document.getElementById('addressLine2').value = currentUser.address.addressLine2 || '';
+          document.getElementById('city').value = currentUser.address.city || '';
+          document.getElementById('state').value = currentUser.address.state || '';
+          document.getElementById('pincode').value = currentUser.address.pincode || '';
+          document.getElementById('landmark').value = currentUser.address.landmark || '';
+        }
+      });
+      
+      // Real-time card number formatting
+      document.getElementById('cardNumber').addEventListener('input', function(e) {
+        let value = this.value.replace(/\s/g, '').replace(/\D/g, '');
+        let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+        this.value = formattedValue;
+      });
+      
+      // Real-time expiry date formatting
+      document.getElementById('expiry').addEventListener('input', function(e) {
+        let value = this.value.replace(/\D/g, '');
+        if (value.length >= 2) {
+          value = value.slice(0, 2) + '/' + value.slice(2, 4);
+        }
+        this.value = value;
+      });
+      
+      // Real-time CVV validation (numbers only)
+      document.getElementById('cvv').addEventListener('input', function(e) {
+        this.value = this.value.replace(/\D/g, '');
+      });
+      
+      // Real-time phone validation in address form
+      document.getElementById('phoneAddress').addEventListener('input', function(e) {
+        this.value = this.value.replace(/\D/g, '');
+        if (this.value.length > 10) {
+          this.value = this.value.slice(0, 10);
+        }
+        if (this.value.length > 0 && !/^[6-9]/.test(this.value)) {
+          this.style.borderColor = '#ff4444';
+        } else {
+          this.style.borderColor = '#e0e0e0';
+        }
+      });
+      
+      // Real-time pincode validation
+      document.getElementById('pincode').addEventListener('input', function(e) {
+        this.value = this.value.replace(/\D/g, '');
+        if (this.value.length > 6) {
+          this.value = this.value.slice(0, 6);
+        }
+      });
+
+      // Handle "Complete Payment" button inside modal
+      document.getElementById('completePaymentBtn').addEventListener('click', function () {
+        // Check if we're in display view (address already saved)
+        const addressDisplayView = document.getElementById('addressDisplayView');
+        const addressFormView = document.getElementById('addressFormView');
+        
+        if (addressDisplayView.style.display === 'block') {
+          // User confirmed the saved address, proceed with payment
+          proceedWithPayment();
+          return;
+        }
+        
+        // We're in form view, validate and save address
+        const fullName = document.getElementById('fullNameAddress').value.trim();
+        const phone = document.getElementById('phoneAddress').value.trim();
+        const email = document.getElementById('emailAddress').value.trim();
+        const addressLine1 = document.getElementById('addressLine1').value.trim();
+        const city = document.getElementById('city').value.trim();
+        const state = document.getElementById('state').value.trim();
+        const pincode = document.getElementById('pincode').value.trim();
+        
+        // Validate required fields
+        if (!fullName || !phone || !email || !addressLine1 || !city || !state || !pincode) {
+          alert('Please fill in all required fields');
+          return;
+        }
+        
+        // Validate phone number
+        if (!/^[6-9]\d{9}$/.test(phone)) {
+          alert('Please enter a valid 10-digit phone number starting with 6, 7, 8, or 9');
+          return;
+        }
+        
+        // Validate pincode
+        if (!/^\d{6}$/.test(pincode)) {
+          alert('Please enter a valid 6-digit pincode');
+          return;
+        }
+        
+        // Validate email
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          alert('Please enter a valid email address');
+          return;
+        }
+        
+        // Save address to user data
+        const addressData = {
+          fullName: fullName,
+          phone: phone,
+          email: email,
+          addressLine1: addressLine1,
+          addressLine2: document.getElementById('addressLine2').value.trim(),
+          city: city,
+          state: state,
+          pincode: pincode,
+          landmark: document.getElementById('landmark').value.trim()
+        };
+        
+        // Update current user with address
+        const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+        if (currentUser.id) {
+          updateUserAddress(currentUser.id, addressData);
+        } else {
+          currentUser.address = addressData;
+          localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        }
+        
+        // Proceed with payment
+        proceedWithPayment();
+      });
+      
+      // Function to proceed with payment
+      function proceedWithPayment() {
+        // Close modal
+        const addressModal = bootstrap.Modal.getInstance(document.getElementById('addressModal'));
+        addressModal.hide();
+        
+        // Calculate order total
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const subtotal = cart.reduce((sum, item) => {
+          const priceValue = parseInt(item.price.replace(/[^0-9]/g, ''));
+          return sum + (priceValue * item.quantity);
+        }, 0);
+        const delivery = subtotal >= 499 ? 0 : 50;
+        const orderTotal = subtotal + delivery - appliedDiscount;
+        
+        // Mark coupon as used if applied
+        if (couponApplied) {
+          markCouponAsUsed();
+        }
+        
+        // Track purchase and check for new coupon
+        const newCoupon = trackPurchase(orderTotal);
+        
+        // Show success animation
+        const successOverlay = document.getElementById('successOverlay');
+        successOverlay.classList.add('show');
+
+        // Clear cart
+        localStorage.removeItem('cart');
+        
+        // Show coupon notification if earned
+        if (newCoupon) {
+          setTimeout(() => {
+            showCouponNotification(newCoupon);
+          }, 3500);
+        }
+
+        // Redirect to home page after delay
+        setTimeout(() => {
+          window.location.href = '../index.html';
+        }, newCoupon ? 7000 : 3000);
+      }
+
+      // Load order summary on page load
+      loadOrderSummary();
+      
+    </script>
+  </body>
+</html>
+
+

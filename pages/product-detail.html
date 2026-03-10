@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>COMBO MUKHWAS OF 6 - JoyeSpoon</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap"
+    rel="stylesheet" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../static/css/styles.css" />
+</head>
+
+<body>
+  <!-- Top Banner -->
+  <div class="announcement-bar">
+    <p class="mb-0">FREE SHIPPING ON ALL ORDERS ABOVE ₹499</p>
+  </div>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html">
+        <span class="brand-text"><img src="../static/images/joyspoonicon.avif"></span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="../index.html#home">HOME</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="products.html">Product</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="Wedding.html">Wedding Spacial</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../index.html#festive-hamper">Festive Hamper</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../index.html#contact">CONTACT</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="searchIcon"><i class="fas fa-search"></i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="login.html"><i class="fas fa-user"></i></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="payment.html" id="cartIcon"><i class="fas fa-shopping-cart"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Product Detail Section -->
+  <section class="product-detail-section py-5">
+    <div class="container">
+      <!-- Breadcrumb -->
+      <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="products.html">Products</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Combo Mukhwas of 6</li>
+        </ol>
+      </nav>
+
+      <div class="row">
+        <!-- Product Images -->
+        <div class="col-lg-6">
+          <div class="product-detail-images">
+            <div class="main-image mb-3">
+              <img src="../static/images/i1.png" alt="COMBO MUKHWAS OF 6" id="mainProductImage" class="img-fluid">
+            </div>
+            <div class="thumbnail-images d-flex gap-2">
+              <img src="../static/images/i1.png" alt="Thumbnail 1" class="img-thumbnail" onclick="changeImage('i1.png')">
+              <img src="../static/images/i2.webp" alt="Thumbnail 2" class="img-thumbnail" onclick="changeImage('i2.webp')">
+              <img src="../static/images/i3.png" alt="Thumbnail 3" class="img-thumbnail" onclick="changeImage('i3.png')">
+              <img src="../static/images/i4.webp" alt="Thumbnail 4" class="img-thumbnail" onclick="changeImage('i4.webp')">
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="col-lg-6">
+          <div class="product-detail-info">
+            <h1 class="product-detail-title">COMBO MUKHWAS OF 6</h1>
+            
+            <div class="product-detail-rating mb-3">
+              <div class="rating d-inline-block">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+              <span class="ms-2">(150 reviews)</span>
+            </div>
+
+            <div class="product-detail-price mb-4">
+              <span class="current-price">₹299</span>
+              <span class="old-price ms-2">₹399</span>
+              <span class="discount-badge ms-2">25% OFF</span>
+            </div>
+
+            <p class="product-short-description mb-4">
+              Experience the authentic taste of India with our premium Combo Mukhwas collection. 
+              A perfect blend of 6 different mouth fresheners that will delight your taste buds.
+            </p>
+
+            <!-- Quantity Selector -->
+            <div class="quantity-selector mb-4">
+              <label class="form-label">Quantity:</label>
+              <div class="input-group" style="width: 150px;">
+                <button class="btn btn-outline-secondary" type="button" onclick="decreaseQty()">-</button>
+                <input type="text" class="form-control text-center" value="1" id="quantity" readonly>
+                <button class="btn btn-outline-secondary" type="button" onclick="increaseQty()">+</button>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="product-actions mb-4">
+              <button class="btn btn-primary btn-lg me-2 mb-2">
+                <i class="fas fa-shopping-cart me-2"></i>ADD TO CART
+              </button>
+              <button class="btn btn-success btn-lg mb-2">
+                <i class="fas fa-bolt me-2"></i>BUY IT NOW
+              </button>
+            </div>
+
+            <div class="product-meta mb-4">
+              <p class="mb-2"><strong>SKU:</strong> JOY-CMB-001</p>
+              <p class="mb-2"><strong>Category:</strong> Combo Packs</p>
+              <p class="mb-2"><strong>Tags:</strong> Mukhwas, Mouth Freshener, Combo Pack</p>
+            </div>
+
+            <!-- Product Features -->
+            <div class="product-features">
+              <h5 class="mb-3">Key Features:</h5>
+              <ul class="feature-list">
+                <li><i class="fas fa-check-circle text-success me-2"></i>Premium quality ingredients</li>
+                <li><i class="fas fa-check-circle text-success me-2"></i>6 different flavors in one pack</li>
+                <li><i class="fas fa-check-circle text-success me-2"></i>Perfect for after meals</li>
+                <li><i class="fas fa-check-circle text-success me-2"></i>Hygienically packed</li>
+                <li><i class="fas fa-check-circle text-success me-2"></i>Long-lasting freshness</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Tabs -->
+      <div class="row mt-5">
+        <div class="col-12">
+          <ul class="nav nav-tabs" id="productTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" 
+                type="button" role="tab">Description</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="ingredients-tab" data-bs-toggle="tab" data-bs-target="#ingredients" 
+                type="button" role="tab">Ingredients</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" 
+                type="button" role="tab">Reviews (150)</button>
+            </li>
+          </ul>
+          <div class="tab-content p-4 border border-top-0" id="productTabContent">
+            <div class="tab-pane fade show active" id="description" role="tabpanel">
+              <h5>Product Description</h5>
+              <p>
+                Our Combo Mukhwas of 6 is a carefully curated collection of the finest mouth fresheners from across India. 
+                Each variant in this combo pack offers a unique taste experience, from sweet to tangy, ensuring there's 
+                something for everyone in the family.
+              </p>
+              <p>
+                Made with premium quality ingredients and traditional recipes, these mukhwas not only freshen your breath 
+                but also aid in digestion. Perfect for serving guests, keeping at your office desk, or enjoying after meals.
+              </p>
+              <h6 class="mt-4">What's Included:</h6>
+              <ul>
+                <li>Sweet Saunf - Classic fennel seeds with a sweet coating</li>
+                <li>Colorful Mukhwas - A vibrant mix of flavored seeds</li>
+                <li>Mint Fresh - Cool and refreshing mint-flavored seeds</li>
+                <li>Rose Delight - Aromatic rose-flavored mukhwas</li>
+                <li>Digestive Mix - Special blend for better digestion</li>
+                <li>Premium Blend - Our signature premium mix</li>
+              </ul>
+            </div>
+            <div class="tab-pane fade" id="ingredients" role="tabpanel">
+              <h5>Ingredients</h5>
+              <p><strong>Common Ingredients:</strong></p>
+              <ul>
+                <li>Fennel Seeds (Saunf)</li>
+                <li>Sugar</li>
+                <li>Natural Food Colors</li>
+                <li>Natural Flavors</li>
+                <li>Menthol</li>
+                <li>Rose Extract</li>
+                <li>Cardamom</li>
+                <li>Mint Extract</li>
+              </ul>
+              <p class="mt-3"><strong>Allergen Information:</strong> May contain traces of nuts. Manufactured in a facility that processes tree nuts.</p>
+              <p><strong>Storage:</strong> Store in a cool, dry place away from direct sunlight.</p>
+            </div>
+            <div class="tab-pane fade" id="reviews" role="tabpanel">
+              <h5>Customer Reviews</h5>
+              <div class="review-item mb-4 pb-3 border-bottom">
+                <div class="d-flex justify-content-between mb-2">
+                  <div>
+                    <strong>Priya Sharma</strong>
+                    <div class="rating">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                    </div>
+                  </div>
+                  <small class="text-muted">2 days ago</small>
+                </div>
+                <p>Excellent quality! All six flavors are amazing. My family loves it. Highly recommended!</p>
+              </div>
+              <div class="review-item mb-4 pb-3 border-bottom">
+                <div class="d-flex justify-content-between mb-2">
+                  <div>
+                    <strong>Rajesh Kumar</strong>
+                    <div class="rating">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                    </div>
+                  </div>
+                  <small class="text-muted">1 week ago</small>
+                </div>
+                <p>Great combo pack! Perfect for gifting. The packaging is also very nice.</p>
+              </div>
+              <div class="review-item mb-4 pb-3 border-bottom">
+                <div class="d-flex justify-content-between mb-2">
+                  <div>
+                    <strong>Anita Desai</strong>
+                    <div class="rating">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star-half-alt"></i>
+                    </div>
+                  </div>
+                  <small class="text-muted">2 weeks ago</small>
+                </div>
+                <p>Very good product. Fresh and tasty. Will order again!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Related Products -->
+      <div class="row mt-5">
+        <div class="col-12">
+          <h3 class="mb-4">You May Also Like</h3>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="product-card">
+            <div class="product-image">
+              <img src="../static/images/i3.png" alt="Product" class="product-img-main" />
+            </div>
+            <div class="product-info">
+              <h5>COMBO MUKHWAS #2</h5>
+              <div class="rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <span>(200)</span>
+              </div>
+              <p class="price">₹349 <span class="old-price">₹449</span></p>
+              <button class="btn btn-add-cart">ADD TO CART</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="product-card">
+            <div class="product-image">
+              <img src="../static/images/i5.png" alt="Product" class="product-img-main" />
+            </div>
+            <div class="product-info">
+              <h5>COMBO MUKHWAS #3</h5>
+              <div class="rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+                <span>(180)</span>
+              </div>
+              <p class="price">₹399 <span class="old-price">₹499</span></p>
+              <button class="btn btn-add-cart">ADD TO CART</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="product-card">
+            <div class="product-image">
+              <img src="../static/images/i7.png" alt="Product" class="product-img-main" />
+            </div>
+            <div class="product-info">
+              <h5>COMBO MUKHWAS #4</h5>
+              <div class="rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <span>(220)</span>
+              </div>
+              <p class="price">₹279 <span class="old-price">₹379</span></p>
+              <button class="btn btn-add-cart">ADD TO CART</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="product-card">
+            <div class="product-image">
+              <img src="../static/images/i12.png" alt="DELUXE MUKHWAS" class="product-img-main" />
+            </div>
+            <div class="product-info">
+              <h5>DELUXE MUKHWAS</h5>
+              <div class="rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <span>(190)</span>
+              </div>
+              <p class="price">₹349</p>
+              <button class="btn btn-add-cart">ADD TO CART</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer" id="contact">
+    <div class="footer-logo-container">
+      <img src="../static/images/logo.webp" alt="JoyeSpoon Logo" class="footer-logo">
+    </div>
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-3 col-md-6">
+          <h5 class="footer-title">JOYESPOON</h5>
+          <p>
+            Discover the joy of authentic Indian mouth fresheners crafted with
+            premium ingredients.
+          </p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <h5 class="footer-title">QUICK LINKS</h5>
+          <ul class="footer-links">
+            <li><a href="../index.html#home">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="../index.html#contact">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <h5 class="footer-title">CUSTOMER CARE</h5>
+          <ul class="footer-links">
+            <li><a href="#">Track Order</a></li>
+            <li><a href="#">Shipping Policy</a></li>
+            <li><a href="#">Return Policy</a></li>
+            <li><a href="#">FAQs</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <h5 class="footer-title">CONTACT US</h5>
+          <ul class="footer-contact">
+            <li>
+              <i class="fas fa-map-marker-alt"></i> Mumbai, Maharashtra, India
+            </li>
+            <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+            <li><i class="fas fa-envelope"></i> info@joyespoon.com</li>
+          </ul>
+        </div>
+      </div>
+      <hr class="footer-divider" />
+      <div class="footer-bottom">
+        <p>
+          &copy; 2026 JoyeSpoon. All Rights Reserved. | Designed with ❤️ in
+          India
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-top" id="scrollTop">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="../static/js/script.js"></script>
+
+  <!-- Product Detail JS -->
+  <script>
+    // Change main image on thumbnail click
+    function changeImage(imageSrc) {
+      document.getElementById('mainProductImage').src = imageSrc;
+    }
+
+    // Quantity controls
+    function increaseQty() {
+      let qty = parseInt(document.getElementById('quantity').value);
+      document.getElementById('quantity').value = qty + 1;
+    }
+
+    function decreaseQty() {
+      let qty = parseInt(document.getElementById('quantity').value);
+      if (qty > 1) {
+        document.getElementById('quantity').value = qty - 1;
+      }
+    }
+  </script>
+
+  <!-- WhatsApp Float Button -->
+  <a href="https://wa.me/7801820504" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+</body>
+
+</html>
+
+

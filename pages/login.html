@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - JoyeSpoon</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Login CSS -->
+    <link rel="stylesheet" href="../static/css/login.css" />
+  </head>
+  <body>
+    <!-- Top Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="../index.html">
+          <span class="brand-text"><img src="../static/images/joyspoonicon.avif"></span>
+        </a>
+        <button
+          class="btn btn-outline-light btn-sm"
+          onclick="window.location.href='../index.html'"
+        >
+          <i class="fas fa-arrow-left"></i> Back to Home
+        </button>
+      </div>
+    </nav>
+
+    <!-- Login Section -->
+    <section class="login-section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-5 col-md-7">
+            <div class="login-card">
+              <h1 class="login-title">LOGIN</h1>
+              <p class="login-subtitle">
+                Please enter your email and password to log in.
+              </p>
+
+              <form id="loginForm" class="login-form">
+                <div class="form-group mb-4">
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    placeholder="Email"
+                    required
+                  />
+                </div>
+
+                <div class="form-group mb-2 position-relative">
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    placeholder="Password"
+                    required
+                  />
+                  <a href="#" class="forgot-password">Forgot your password?</a>
+                </div>
+
+                <button type="submit" class="btn btn-login">LOG IN</button>
+
+                <div class="signup-link">
+                  <p>
+                    New customer? <a href="signup.html">Create an account</a>
+                  </p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/7801820504" class="whatsapp-float" target="_blank">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- User Management System -->
+    <script src="../static/js/user-management.js"></script>
+
+    <!-- Login Script -->
+    <script>
+      // Verify user management system is loaded
+      console.log('User management system loaded:', typeof loginUser !== 'undefined');
+      console.log('All users in DB:', getAllUsers());
+
+      // Handle login form submission
+      document
+        .getElementById('loginForm')
+        .addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          const email = document.getElementById('email').value.trim();
+          const password = document.getElementById('password').value;
+
+          console.log('=== LOGIN ATTEMPT ===');
+          console.log('Email:', email);
+          console.log('Password length:', password.length);
+          console.log('Users in database:', getAllUsers().length);
+
+          // Check if user management system is available
+          if (typeof loginUser !== 'function') {
+            console.error('ERROR: loginUser function not found!');
+            alert('System error: User management not loaded. Please refresh the page.');
+            return;
+          }
+
+          // Login user using user management system
+          const result = loginUser(email, password);
+          
+          console.log('Login result:', result);
+          
+          if (!result.success) {
+            console.log('Login failed:', result.message);
+            alert(result.message);
+            if (result.message.includes('sign up')) {
+              setTimeout(() => {
+                window.location.href = 'signup.html';
+              }, 1500);
+            }
+            return;
+          }
+
+          // Verify login was successful
+          const isLoggedIn = localStorage.getItem('isLoggedIn');
+          const currentUser = localStorage.getItem('currentUser');
+          
+          console.log('Login successful!');
+          console.log('isLoggedIn in localStorage:', isLoggedIn);
+          console.log('currentUser in localStorage:', currentUser);
+
+          // Show success message
+          alert('Login successful! Welcome back, ' + result.user.fullName + '!');
+          
+          console.log('Redirecting to homepage in 500ms...');
+          
+          // Redirect to home page with shorter delay
+          setTimeout(() => {
+            console.log('Executing redirect now...');
+            window.location.replace('../index.html');
+          }, 500);
+        });
+
+      // Handle forgot password
+      document
+        .querySelector('.forgot-password')
+        .addEventListener('click', function (e) {
+          e.preventDefault();
+          const email = prompt(
+            'Please enter your email address to reset password:'
+          );
+
+          if (email) {
+            const user = getUserByEmail(email);
+            if (user) {
+              alert('Password reset link would be sent to: ' + email + '\n\nFor demo purposes, your password is: ' + user.password);
+            } else {
+              alert('Email not found. Please check and try again.');
+            }
+          }
+        });
+
+      // Debug: Log page load
+      console.log('Login page loaded');
+      console.log('Current login status:', localStorage.getItem('isLoggedIn'));
+    </script>
+  </body>
+</html>
+
+
